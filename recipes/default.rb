@@ -47,8 +47,10 @@ bash "allowing nginx traffic through firewall" do
 end
 
 bash "delete default nginx site" do
-  user "root"
-  code "rm /etc/nginx/sites-enabled/default"
+  if File.exist? ("/etc/nginx/sites-enabled/default")
+    user "root"
+    code "rm /etc/nginx/sites-enabled/default"
+  end
 end
 
 execute "restart-nginx" do
