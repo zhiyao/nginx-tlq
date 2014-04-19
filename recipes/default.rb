@@ -4,12 +4,15 @@
 # need this for add-apt-repository to work properly
 package 'python-software-properties'
 
-bash 'adding stable nginx ppa' do
-  user 'root'
-  code <<-EOC
-    add-apt-repository ppa:nginx/stable
-    apt-get update
-  EOC
+include_recipe 'apt'
+
+apt_repository 'nginx-ppa' do
+  uri          'http://ppa.launchpad.net/nginx/stable/ubuntu'
+  distribution node['lsb']['codename']
+  components   ['main']
+  keyserver    'keyserver.ubuntu.com'
+  key          'C300EE8C'
+  deb_src      true
 end
 
 # install nginx
