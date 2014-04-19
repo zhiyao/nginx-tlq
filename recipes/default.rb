@@ -43,6 +43,11 @@ bash "allowing nginx traffic through firewall" do
   code "ufw allow 80 && ufw allow 443"
 end
 
+bash "delete default nginx site" do
+  user "root"
+  code "rm /etc/nginx/sites-enabled/default"
+end
+
 execute "restart-nginx" do
   command "/etc/init.d/nginx restart"
   action :nothing
